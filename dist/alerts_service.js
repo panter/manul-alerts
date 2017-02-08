@@ -6,6 +6,8 @@ var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default
 
 var _extends = require('babel-runtime/helpers/extends')['default'];
 
+var _objectWithoutProperties = require('babel-runtime/helpers/object-without-properties')['default'];
+
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
 
 Object.defineProperty(exports, '__esModule', {
@@ -52,7 +54,9 @@ var _default = (function () {
       var _ref2$disableI18n = _ref2.disableI18n;
       var disableI18n = _ref2$disableI18n === undefined ? false : _ref2$disableI18n;
 
-      this.alerts.push({
+      var props = _objectWithoutProperties(_ref2, ['title', 'message', 'dismissAfter', 'onDismiss', 'actionLabel', 'onActionClick', 'type', 'disableI18n']);
+
+      this.alerts.push(_extends({
         title: title,
         message: message,
         onDismiss: onDismiss,
@@ -60,9 +64,10 @@ var _default = (function () {
         onActionClick: onActionClick,
         dismissAfter: dismissAfter,
         type: type,
-        disableI18n: disableI18n,
+        disableI18n: disableI18n
+      }, props, {
         key: this.counter += 1
-      });
+      }));
       this.alertsDep.changed();
     }
   }, {

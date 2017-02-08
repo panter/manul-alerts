@@ -16,7 +16,7 @@ export default class {
     this.alertsDep.depend();
     return _.clone(this.alerts); // we provide a copy
   }
-  show({ title, message, dismissAfter = 8000, onDismiss, actionLabel, onActionClick, type = 'default', disableI18n = false }) {
+  show({ title, message, dismissAfter = 8000, onDismiss, actionLabel, onActionClick, type = 'default', disableI18n = false, ...props }) {
     this.alerts.push({
       title,
       message,
@@ -26,6 +26,7 @@ export default class {
       dismissAfter,
       type,
       disableI18n,
+      ...props,
       key: this.counter += 1,
     });
     this.alertsDep.changed();

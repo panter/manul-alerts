@@ -62,8 +62,8 @@ var composer = function composer(_ref3, onData) {
     useFallbackForMissing: true,
     showKeyForMissing: true
   };
-  var translate = function translate(key, disableI18n) {
-    return !disableI18n && !_lodash2['default'].isNil(key) ? i18n.t(key, {}, i18nOptions) : key;
+  var translate = function translate(key, translateProps, disableI18n) {
+    return !disableI18n && !_lodash2['default'].isNil(key) ? i18n.t(key, translateProps, i18nOptions) : key;
   };
   var translateAlert = function translateAlert(_ref4) {
     var disableI18n = _ref4.disableI18n;
@@ -74,9 +74,9 @@ var composer = function composer(_ref3, onData) {
     var alert = _objectWithoutProperties(_ref4, ['disableI18n', 'message', 'actionLabel', 'title']);
 
     return _extends({}, alert, {
-      message: translate(message, disableI18n),
-      title: translate(title, disableI18n),
-      actionLabel: translate(actionLabel, disableI18n)
+      message: translate(message, alert, disableI18n),
+      title: translate(title, alert, disableI18n),
+      actionLabel: translate(actionLabel, alert, disableI18n)
     });
   }
   // translate alerts

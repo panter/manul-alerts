@@ -35,14 +35,14 @@ export const composer = ({ context }, onData) => {
     useFallbackForMissing: true,
     showKeyForMissing: true,
   };
-  const translate = (key, disableI18n) => (
-    !disableI18n && !_.isNil(key) ? i18n.t(key, {}, i18nOptions) : key
+  const translate = (key, translateProps, disableI18n) => (
+    !disableI18n && !_.isNil(key) ? i18n.t(key, translateProps, i18nOptions) : key
   );
   const translateAlert = ({ disableI18n, message, actionLabel, title, ...alert }) => ({
     ...alert,
-    message: translate(message, disableI18n),
-    title: translate(title, disableI18n),
-    actionLabel: translate(actionLabel, disableI18n),
+    message: translate(message, alert, disableI18n),
+    title: translate(title, alert, disableI18n),
+    actionLabel: translate(actionLabel, alert, disableI18n),
   })
   // translate alerts
   ;
