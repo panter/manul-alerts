@@ -43,5 +43,32 @@ export default class {
     _.remove(this.alerts, anAlert => anAlert.key === alert.key);
     this.alertsDep.changed();
   }
+  /**
+  experimental
+  **/
+  handleCallback(namespace, next, options = {}) {
+    const {
+        titleSuccess = () => `${namespace}.success`,
+        titleError = () => 'error',
+        messageSuccess = () => null,
+        messageError = error => `${namespace}.errors.${error.error}`,
+    } = options;
+    return (error, result) => {
+      if (error) {
+        this.error({
+          title: titleError(),
+          message: messageError(error),
+        });
+      } else {
+        this.show({
+          title: titleSuccess(),
+          message: messageSuccess(),
+        });
+      }
+      if (next) {
+        next(error, result);
+      }
+    };
+  }
 
 }
