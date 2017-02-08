@@ -57,16 +57,26 @@ var composer = function composer(_ref3, onData) {
   var i18n = _context2.i18n;
 
   var alerts = Alerts.list();
+  // we enforce translations here,
+  var i18nOptions = {
+    useFallbackForMissing: true,
+    showKeyForMissing: true
+  };
+  var translate = function translate(key, disableI18n) {
+    return !disableI18n && !_lodash2['default'].isNil(key) ? i18n.t(key, {}, i18nOptions) : key;
+  };
   var translateAlert = function translateAlert(_ref4) {
-    var shouldI18n = _ref4.i18n;
+    var disableI18n = _ref4.disableI18n;
     var message = _ref4.message;
     var actionLabel = _ref4.actionLabel;
     var title = _ref4.title;
-    var alert = _ref4.alert;
+
+    var alert = _objectWithoutProperties(_ref4, ['disableI18n', 'message', 'actionLabel', 'title']);
+
     return _extends({}, alert, {
-      message: shouldI18n && !_lodash2['default'].isNil(message) ? i18n.t(message) : message,
-      title: shouldI18n && !_lodash2['default'].isNil(title) ? i18n.t(title) : title,
-      actionLabel: shouldI18n && !_lodash2['default'].isNil(actionLabel) ? i18n.t(actionLabel) : actionLabel
+      message: translate(message, disableI18n),
+      title: translate(title, disableI18n),
+      actionLabel: translate(actionLabel, disableI18n)
     });
   }
   // translate alerts

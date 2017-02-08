@@ -28,6 +28,7 @@ var _default = (function () {
     this.confirmCallbacks = {};
     this.alerts = [];
     this.alertsDep = new Tracker.Dependency();
+    this.counter = 0;
   }
 
   _createClass(_default, [{
@@ -48,8 +49,8 @@ var _default = (function () {
       var onActionClick = _ref2.onActionClick;
       var _ref2$type = _ref2.type;
       var type = _ref2$type === undefined ? 'default' : _ref2$type;
-      var _ref2$i18n = _ref2.i18n;
-      var i18n = _ref2$i18n === undefined ? true : _ref2$i18n;
+      var _ref2$disableI18n = _ref2.disableI18n;
+      var disableI18n = _ref2$disableI18n === undefined ? false : _ref2$disableI18n;
 
       this.alerts.push({
         title: title,
@@ -59,8 +60,8 @@ var _default = (function () {
         onActionClick: onActionClick,
         dismissAfter: dismissAfter,
         type: type,
-        i18n: i18n,
-        key: this.alerts.length
+        disableI18n: disableI18n,
+        key: this.counter += 1
       });
       this.alertsDep.changed();
     }

@@ -9,13 +9,14 @@ export default class {
     this.confirmCallbacks = {};
     this.alerts = [];
     this.alertsDep = new Tracker.Dependency();
+    this.counter = 0;
   }
 
   list() {
     this.alertsDep.depend();
     return _.clone(this.alerts); // we provide a copy
   }
-  show({ title, message, dismissAfter = 8000, onDismiss, actionLabel, onActionClick, type = 'default', i18n = true }) {
+  show({ title, message, dismissAfter = 8000, onDismiss, actionLabel, onActionClick, type = 'default', disableI18n = false }) {
     this.alerts.push({
       title,
       message,
@@ -24,8 +25,8 @@ export default class {
       onActionClick,
       dismissAfter,
       type,
-      i18n,
-      key: this.alerts.length,
+      disableI18n,
+      key: this.counter += 1,
     });
     this.alertsDep.changed();
   }
