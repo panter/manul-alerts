@@ -16,7 +16,36 @@ export default class {
     this.alertsDep.depend();
     return _.clone(this.alerts); // we provide a copy
   }
-  show({ title, message, dismissAfter = 8000, onDismiss, actionLabel, onActionClick, type = 'default', disableI18n = false, ...props }) {
+  /**
+  show an alert.
+
+  The following properties can receive simple strings or translation keys:
+  - title
+  - message
+  - actionLabel
+
+  If manul-i18n is in your context as i18n, the are translated.
+  You can pass an array of translation keys as well. In this case
+  the first key is used that exists in the current translation.
+  This is usefull if you construct your key with an error code
+  which might not be translated yet.
+
+  You can add additional properties which will be available for translations
+
+
+  **/
+  show({
+
+      title,
+      message,
+      dismissAfter = 8000,
+      onDismiss,
+      actionLabel,
+      onActionClick,
+      type = 'default',
+      disableI18n = false,
+      ...props
+    }) {
     this.alerts.push({
       title,
       message,
@@ -46,23 +75,33 @@ export default class {
   /**
   experimental
   **/
-  handleCallback(namespace, next, options = {}) {
+  handleCallback(namespace, ...args) {
+    const options = args.length === 2 ? _.first(args) : {};
+    const next = _.last(args);
+
     const {
-        titleSuccess = () => `${namespace}.success`,
-        titleError = () => 'error',
-        messageSuccess = () => null,
-        messageError = error => `${namespace}.errors.${error.error}`,
+        props = () => null,
+        titleSuccess = () => [`${namespace}.success.title`, `${namespace}.success`, 'success.title', 'success'],
+        titleError = () => [`${namespace}.error`, 'error.title', 'error'],
+        messageSuccess = () => [`${namespace}.success.message`, 'success.message', null],
+        messageError = error => [`${namespace}.error.message.${error.error}`, `${namespace}.error.message.default`, `error.message.${error.error}`, 'error.message.default', 'error.message'],
     } = options;
     return (error, result) => {
+      const additionalProps = props({ error, result });
       if (error) {
         this.error({
           title: titleError(),
           message: messageError(error),
+          error,
+          result,
+          ...additionalProps,
         });
       } else {
         this.show({
           title: titleSuccess(),
           message: messageSuccess(),
+          result,
+          ...additionalProps,
         });
       }
       if (next) {

@@ -30,14 +30,19 @@ const AlertStack = ({
 export const composer = ({ context }, onData) => {
   const { Alerts, i18n } = context();
   const alerts = Alerts.list();
-  // we enforce translations here,
-  const i18nOptions = {
+  // we enforce translations-fallbacks here, because it is not a good idea
+  // to show empty error message
+  const fallbackOptions = {
     useFallbackForMissing: true,
     showKeyForMissing: true,
+    nullKeyValue: null, // when a key is not given, dont show anything
   };
-  const translate = (key, translateProps, disableI18n) => (
-    !disableI18n && !_.isNil(key) ? i18n.t(key, translateProps, i18nOptions) : key
-  );
+  const translate = (keyOrKeyArray, translateProps, disableI18n) => {
+    if (disableI18n) {
+      return keyOrKeyArray;
+    }
+    return i18n.t(keyOrKeyArray, translateProps, fallbackOptions);
+  };
   const translateAlert = ({ disableI18n, message, actionLabel, title, ...alert }) => ({
     ...alert,
     message: translate(message, alert, disableI18n),

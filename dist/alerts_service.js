@@ -39,6 +39,20 @@ var _default = (function () {
       this.alertsDep.depend();
       return _lodash2['default'].clone(this.alerts); // we provide a copy
     }
+
+    /**
+    show an alert.
+     The following properties can receive simple strings or translation keys:
+    - title
+    - message
+    - actionLabel
+     If manul-i18n is in your context as i18n, the are translated.
+    You can pass an array of translation keys as well. In this case
+    the first key is used that exists in the current translation.
+    This is usefull if you construct your key with an error code
+    which might not be translated yet.
+     You can add additional properties which will be available for translations
+      **/
   }, {
     key: 'show',
     value: function show(_ref2) {
@@ -84,6 +98,64 @@ var _default = (function () {
         return anAlert.key === alert.key;
       });
       this.alertsDep.changed();
+    }
+
+    /**
+    experimental
+    **/
+  }, {
+    key: 'handleCallback',
+    value: function handleCallback(namespace) {
+      var _this = this;
+
+      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      var options = args.length === 2 ? _lodash2['default'].first(args) : {};
+      var next = _lodash2['default'].last(args);
+
+      var _options$props = options.props;
+      var props = _options$props === undefined ? function () {
+        return null;
+      } : _options$props;
+      var _options$titleSuccess = options.titleSuccess;
+      var titleSuccess = _options$titleSuccess === undefined ? function () {
+        return [namespace + '.success.title', namespace + '.success', 'success.title', 'success'];
+      } : _options$titleSuccess;
+      var _options$titleError = options.titleError;
+      var titleError = _options$titleError === undefined ? function () {
+        return [namespace + '.error', 'error.title', 'error'];
+      } : _options$titleError;
+      var _options$messageSuccess = options.messageSuccess;
+      var messageSuccess = _options$messageSuccess === undefined ? function () {
+        return [namespace + '.success.message', 'success.message', null];
+      } : _options$messageSuccess;
+      var _options$messageError = options.messageError;
+      var messageError = _options$messageError === undefined ? function (error) {
+        return [namespace + '.error.message.' + error.error, namespace + '.error.message.default', 'error.message.' + error.error, 'error.message.default', 'error.message'];
+      } : _options$messageError;
+
+      return function (error, result) {
+        var additionalProps = props({ error: error, result: result });
+        if (error) {
+          _this.error(_extends({
+            title: titleError(),
+            message: messageError(error),
+            error: error,
+            result: result
+          }, additionalProps));
+        } else {
+          _this.show(_extends({
+            title: titleSuccess(),
+            message: messageSuccess(),
+            result: result
+          }, additionalProps));
+        }
+        if (next) {
+          next(error, result);
+        }
+      };
     }
   }]);
 

@@ -57,13 +57,18 @@ var composer = function composer(_ref3, onData) {
   var i18n = _context2.i18n;
 
   var alerts = Alerts.list();
-  // we enforce translations here,
-  var i18nOptions = {
+  // we enforce translations-fallbacks here, because it is not a good idea
+  // to show empty error message
+  var fallbackOptions = {
     useFallbackForMissing: true,
-    showKeyForMissing: true
-  };
-  var translate = function translate(key, translateProps, disableI18n) {
-    return !disableI18n && !_lodash2['default'].isNil(key) ? i18n.t(key, translateProps, i18nOptions) : key;
+    showKeyForMissing: true,
+    nullKeyValue: null };
+  // when a key is not given, dont show anything
+  var translate = function translate(keyOrKeyArray, translateProps, disableI18n) {
+    if (disableI18n) {
+      return keyOrKeyArray;
+    }
+    return i18n.t(keyOrKeyArray, translateProps, fallbackOptions);
   };
   var translateAlert = function translateAlert(_ref4) {
     var disableI18n = _ref4.disableI18n;
