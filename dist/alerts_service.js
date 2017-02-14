@@ -27,9 +27,10 @@ var _default = (function () {
     if (!Tracker) {
       throw new Error('please provide Tracker in your context');
     }
-    this.confirmCallbacks = {};
+    this.confirmProps = {};
     this.alerts = [];
     this.alertsDep = new Tracker.Dependency();
+    this.confirmDep = new Tracker.Dependency();
     this.counter = 0;
   }
 
@@ -112,8 +113,8 @@ var _default = (function () {
         args[_key - 1] = arguments[_key];
       }
 
-      var options = args.length === 2 ? _lodash2['default'].first(args) : {};
-      var next = _lodash2['default'].last(args);
+      var options = _lodash2['default'].isObject(_lodash2['default'].first(args)) ? _lodash2['default'].first(args) : {};
+      var next = _lodash2['default'].isFunction(_lodash2['default'].last(args)) ? _lodash2['default'].last(args) : _lodash2['default'].noop;
 
       var _options$props = options.props;
       var props = _options$props === undefined ? function () {
@@ -152,10 +153,47 @@ var _default = (function () {
             result: result
           }, additionalProps));
         }
-        if (next) {
-          next(error, result);
+        next(error, result);
+      };
+    }
+  }, {
+    key: 'confirm',
+    value: function confirm(_ref3) {
+      var _this2 = this;
+
+      var message = _ref3.message;
+      var _onConfirm = _ref3.onConfirm;
+      var _onCancel = _ref3.onCancel;
+
+      var hideAndInvoke = function hideAndInvoke(callback) {
+        _this2.hideConfirm();
+        if (callback) {
+          callback();
         }
       };
+      this.confirmProps = {
+        message: message,
+        onCancel: function onCancel() {
+          return hideAndInvoke(_onCancel);
+        },
+        onConfirm: function onConfirm() {
+          return hideAndInvoke(_onConfirm);
+        }
+      };
+
+      this.confirmDep.changed();
+    }
+  }, {
+    key: 'hideConfirm',
+    value: function hideConfirm() {
+      this.confirmDep.changed();
+      this.confirmProps = {};
+    }
+  }, {
+    key: 'getConfirm',
+    value: function getConfirm() {
+      this.confirmDep.depend();
+      return this.confirmProps;
     }
   }]);
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDeps, composeAll, composeWithTracker } from 'mantra-core';
 import { NotificationStack as ReactNotificationStack } from 'react-notification';
-import _ from 'lodash';
 
 // some aliassing for ReactNotificationStack
 const transformAlerts = (alerts, defaultStyles, stylesError) => alerts.map(

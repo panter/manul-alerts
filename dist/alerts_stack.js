@@ -18,10 +18,6 @@ var _mantraCore = require('mantra-core');
 
 var _reactNotification = require('react-notification');
 
-var _lodash = require('lodash');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
 // some aliassing for ReactNotificationStack
 var transformAlerts = function transformAlerts(alerts, defaultStyles, stylesError) {
   return alerts.map(function (_ref) {

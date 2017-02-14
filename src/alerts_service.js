@@ -6,9 +6,10 @@ export default class {
     if (!Tracker) {
       throw new Error('please provide Tracker in your context');
     }
-    this.confirmCallbacks = {};
+    this.confirmProps = {};
     this.alerts = [];
     this.alertsDep = new Tracker.Dependency();
+    this.confirmDep = new Tracker.Dependency();
     this.counter = 0;
   }
 
@@ -76,8 +77,8 @@ export default class {
   experimental
   **/
   handleCallback(namespace, ...args) {
-    const options = args.length === 2 ? _.first(args) : {};
-    const next = _.last(args);
+    const options = _.isObject(_.first(args)) ? _.first(args) : {};
+    const next = _.isFunction(_.last(args)) ? _.last(args) : _.noop;
 
     const {
         props = () => null,
@@ -104,10 +105,32 @@ export default class {
           ...additionalProps,
         });
       }
-      if (next) {
-        next(error, result);
+      next(error, result);
+    };
+  }
+
+  confirm({ message, onConfirm, onCancel }) {
+    const hideAndInvoke = (callback) => {
+      this.hideConfirm();
+      if (callback) {
+        callback();
       }
     };
+    this.confirmProps = {
+      message,
+      onCancel: () => hideAndInvoke(onCancel),
+      onConfirm: () => hideAndInvoke(onConfirm),
+    };
+
+    this.confirmDep.changed();
+  }
+  hideConfirm() {
+    this.confirmDep.changed();
+    this.confirmProps = {};
+  }
+  getConfirm() {
+    this.confirmDep.depend();
+    return this.confirmProps;
   }
 
 }
