@@ -2,8 +2,8 @@ import { useDeps, composeAll, composeWithTracker } from 'mantra-core';
 
 export const composer = ({ context }, onData) => {
   const { Alerts } = context();
-  const { message, onCancel, onConfirm } = Alerts.getConfirm();
-  onData(null, { message, onCancel, onConfirm });
+  const confirmProps = Alerts.getConfirm();
+  onData(null, confirmProps);
 };
 
 export const depsMapper = context => ({

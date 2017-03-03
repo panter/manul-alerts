@@ -109,7 +109,7 @@ export default class {
     };
   }
 
-  confirm({ message, onConfirm, onCancel }) {
+  confirm({ message, onConfirm, onCancel, ...props }) {
     const hideAndInvoke = (callback) => {
       this.hideConfirm();
       if (callback) {
@@ -120,6 +120,7 @@ export default class {
       message,
       onCancel: () => hideAndInvoke(onCancel),
       onConfirm: () => hideAndInvoke(onConfirm),
+      ...props,
     };
 
     this.confirmDep.changed();
