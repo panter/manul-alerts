@@ -13,13 +13,8 @@ var composer = function composer(_ref, onData) {
 
   var Alerts = _context2.Alerts;
 
-  var _Alerts$getConfirm = Alerts.getConfirm();
-
-  var message = _Alerts$getConfirm.message;
-  var onCancel = _Alerts$getConfirm.onCancel;
-  var onConfirm = _Alerts$getConfirm.onConfirm;
-
-  onData(null, { message: message, onCancel: onCancel, onConfirm: onConfirm });
+  var confirmProps = Alerts.getConfirm();
+  onData(null, confirmProps);
 };
 
 exports.composer = composer;

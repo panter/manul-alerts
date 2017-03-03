@@ -165,13 +165,15 @@ var _default = (function () {
       var _onConfirm = _ref3.onConfirm;
       var _onCancel = _ref3.onCancel;
 
+      var props = _objectWithoutProperties(_ref3, ['message', 'onConfirm', 'onCancel']);
+
       var hideAndInvoke = function hideAndInvoke(callback) {
         _this2.hideConfirm();
         if (callback) {
           callback();
         }
       };
-      this.confirmProps = {
+      this.confirmProps = _extends({
         message: message,
         onCancel: function onCancel() {
           return hideAndInvoke(_onCancel);
@@ -179,7 +181,7 @@ var _default = (function () {
         onConfirm: function onConfirm() {
           return hideAndInvoke(_onConfirm);
         }
-      };
+      }, props);
 
       this.confirmDep.changed();
     }
