@@ -5,7 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.depsMapper = exports.composer = undefined;
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
 var _react = require('react');
 
@@ -17,17 +23,14 @@ var _reactNotification = require('react-notification');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
 // some aliassing for ReactNotificationStack
 var transformAlerts = function transformAlerts(alerts, defaultStyles, stylesError) {
   return alerts.map(function (_ref) {
     var onActionClick = _ref.onActionClick,
         actionLabel = _ref.actionLabel,
         type = _ref.type,
-        alert = _objectWithoutProperties(_ref, ['onActionClick', 'actionLabel', 'type']);
-
-    return _extends(_extends({}, defaultStyles, type === 'error' && stylesError), alert, {
+        alert = (0, _objectWithoutProperties3.default)(_ref, ['onActionClick', 'actionLabel', 'type']);
+    return (0, _extends3.default)((0, _extends3.default)({}, defaultStyles, type === 'error' && stylesError), alert, {
       action: actionLabel,
       onClick: onActionClick
     });
@@ -69,9 +72,8 @@ var composer = function composer(_ref3, onData) {
         message = _ref4.message,
         actionLabel = _ref4.actionLabel,
         title = _ref4.title,
-        alert = _objectWithoutProperties(_ref4, ['disableI18n', 'message', 'actionLabel', 'title']);
-
-    return _extends({}, alert, {
+        alert = (0, _objectWithoutProperties3.default)(_ref4, ['disableI18n', 'message', 'actionLabel', 'title']);
+    return (0, _extends3.default)({}, alert, {
       message: translate(message, alert, disableI18n),
       title: translate(title, alert, disableI18n),
       actionLabel: translate(actionLabel, alert, disableI18n)
