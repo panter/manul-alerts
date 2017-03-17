@@ -1,14 +1,11 @@
 'use strict';
 
-var _extends = require('babel-runtime/helpers/extends')['default'];
-
-var _objectWithoutProperties = require('babel-runtime/helpers/object-without-properties')['default'];
-
-var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
-
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.depsMapper = exports.composer = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _react = require('react');
 
@@ -18,14 +15,17 @@ var _mantraCore = require('mantra-core');
 
 var _reactNotification = require('react-notification');
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 // some aliassing for ReactNotificationStack
 var transformAlerts = function transformAlerts(alerts, defaultStyles, stylesError) {
   return alerts.map(function (_ref) {
-    var onActionClick = _ref.onActionClick;
-    var actionLabel = _ref.actionLabel;
-    var type = _ref.type;
-
-    var alert = _objectWithoutProperties(_ref, ['onActionClick', 'actionLabel', 'type']);
+    var onActionClick = _ref.onActionClick,
+        actionLabel = _ref.actionLabel,
+        type = _ref.type,
+        alert = _objectWithoutProperties(_ref, ['onActionClick', 'actionLabel', 'type']);
 
     return _extends(_extends({}, defaultStyles, type === 'error' && stylesError), alert, {
       action: actionLabel,
@@ -34,11 +34,11 @@ var transformAlerts = function transformAlerts(alerts, defaultStyles, stylesErro
   });
 };
 var AlertStack = function AlertStack(_ref2) {
-  var dismissAlert = _ref2.dismissAlert;
-  var alerts = _ref2.alerts;
-  var styles = _ref2.styles;
-  var stylesError = _ref2.stylesError;
-  return _react2['default'].createElement(_reactNotification.NotificationStack, {
+  var dismissAlert = _ref2.dismissAlert,
+      alerts = _ref2.alerts,
+      styles = _ref2.styles,
+      stylesError = _ref2.stylesError;
+  return _react2.default.createElement(_reactNotification.NotificationStack, {
     notifications: transformAlerts(alerts, styles, stylesError),
     onDismiss: dismissAlert
   });
@@ -47,10 +47,9 @@ var AlertStack = function AlertStack(_ref2) {
 var composer = function composer(_ref3, onData) {
   var context = _ref3.context;
 
-  var _context2 = context();
-
-  var Alerts = _context2.Alerts;
-  var i18n = _context2.i18n;
+  var _context = context(),
+      Alerts = _context.Alerts,
+      i18n = _context.i18n;
 
   var alerts = Alerts.list();
   // we enforce translations-fallbacks here, because it is not a good idea
@@ -59,7 +58,6 @@ var composer = function composer(_ref3, onData) {
     useFallbackForMissing: true,
     showKeyForMissing: true,
     nullKeyValue: null };
-  // when a key is not given, dont show anything
   var translate = function translate(keyOrKeyArray, translateProps, disableI18n) {
     if (disableI18n) {
       return keyOrKeyArray;
@@ -67,12 +65,11 @@ var composer = function composer(_ref3, onData) {
     return i18n.t(keyOrKeyArray, translateProps, fallbackOptions);
   };
   var translateAlert = function translateAlert(_ref4) {
-    var disableI18n = _ref4.disableI18n;
-    var message = _ref4.message;
-    var actionLabel = _ref4.actionLabel;
-    var title = _ref4.title;
-
-    var alert = _objectWithoutProperties(_ref4, ['disableI18n', 'message', 'actionLabel', 'title']);
+    var disableI18n = _ref4.disableI18n,
+        message = _ref4.message,
+        actionLabel = _ref4.actionLabel,
+        title = _ref4.title,
+        alert = _objectWithoutProperties(_ref4, ['disableI18n', 'message', 'actionLabel', 'title']);
 
     return _extends({}, alert, {
       message: translate(message, alert, disableI18n),
@@ -86,15 +83,14 @@ var composer = function composer(_ref3, onData) {
 };
 
 exports.composer = composer;
-var depsMapper = function depsMapper(_context, actions) {
+var depsMapper = exports.depsMapper = function depsMapper(_context2, actions) {
   return {
     context: function context() {
-      return _context;
+      return _context2;
     },
     dismissAlert: actions.alerts.dismiss
   };
 };
 
-exports.depsMapper = depsMapper;
-exports['default'] = (0, _mantraCore.composeAll)((0, _mantraCore.composeWithTracker)(composer), (0, _mantraCore.useDeps)(depsMapper))(AlertStack);
+exports.default = (0, _mantraCore.composeAll)((0, _mantraCore.composeWithTracker)(composer), (0, _mantraCore.useDeps)(depsMapper))(AlertStack);
 //# sourceMappingURL=alerts_stack.js.map
