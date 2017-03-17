@@ -1,34 +1,31 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.depsMapper = exports.composer = undefined;
 
 var _mantraCore = require('mantra-core');
 
-var composer = function composer(_ref, onData) {
+var composer = exports.composer = function composer(_ref, onData) {
   var context = _ref.context;
 
-  var _context2 = context();
-
-  var Alerts = _context2.Alerts;
+  var _context = context(),
+      Alerts = _context.Alerts;
 
   var confirmProps = Alerts.getConfirm();
   onData(null, confirmProps);
 };
 
-exports.composer = composer;
-var depsMapper = function depsMapper(_context) {
+var depsMapper = exports.depsMapper = function depsMapper(_context2) {
   return {
     context: function context() {
-      return _context;
+      return _context2;
     }
   };
 };
 
-exports.depsMapper = depsMapper;
-
-exports['default'] = function (C) {
+exports.default = function (C) {
   return (0, _mantraCore.composeAll)((0, _mantraCore.composeWithTracker)(composer), (0, _mantraCore.useDeps)(depsMapper))(C);
 };
 //# sourceMappingURL=create_confirm.js.map
