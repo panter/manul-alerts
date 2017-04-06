@@ -1,7 +1,7 @@
 {
   "name": "@panter/manul-alerts",
   "description": "",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "author": {
     "name": "Marco Wettstein",
     "email": "maw@panter.ch",
@@ -13,9 +13,7 @@
     "url": "git://github.com/panter/manul-alerts.git"
   },
   "bugs": "https://github.com/panter/manul-alerts/issues",
-  "dependencies": {
-    "react-notification": "^6.6.0"
-  },
+
   "peerDependencies": {
     "babel-runtime": "*.*.*",
     "lodash": "^4.0.0",
@@ -40,6 +38,7 @@
     "tape": "^4.2.2"
   },
   "dependencies": {
+    "react-notification": "^6.6.0",
     "recompose": "^0.21.2"
   },
   "scripts": {
