@@ -1,4 +1,5 @@
 import { useDeps, composeAll, composeWithTracker } from 'mantra-core';
+import { pure } from 'recompose';
 
 export const composer = ({ context }, onData) => {
   const { Alerts } = context();
@@ -13,4 +14,5 @@ export const depsMapper = context => ({
 export default C => composeAll(
   composeWithTracker(composer),
   useDeps(depsMapper),
+  pure,
 )(C);
