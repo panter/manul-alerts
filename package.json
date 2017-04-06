@@ -1,7 +1,7 @@
 {
   "name": "@panter/manul-alerts",
   "description": "",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": {
     "name": "Marco Wettstein",
     "email": "maw@panter.ch",
@@ -38,6 +38,9 @@
     "eslint-plugin-react": "^6.8.0",
     "glob": "^5.0.15",
     "tape": "^4.2.2"
+  },
+  "dependencies": {
+    "recompose": "^0.21.2"
   },
   "scripts": {
     "prepublish": "npm run compile",

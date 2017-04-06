@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDeps, composeAll, composeWithTracker } from 'mantra-core';
 import { NotificationStack as ReactNotificationStack } from 'react-notification';
+import { pure } from 'recompose';
 
 // some aliassing for ReactNotificationStack
 const transformAlerts = (alerts, defaultStyles, stylesError) => alerts.map(
@@ -61,4 +62,5 @@ export const depsMapper = (context, actions) => ({
 export default composeAll(
   composeWithTracker(composer),
   useDeps(depsMapper),
+  pure,
 )(AlertStack);
