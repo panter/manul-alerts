@@ -87,7 +87,13 @@ export default class {
         messageSuccess = () => [`${namespace}.success.message`, 'success.message', null],
         messageError = error => [`${namespace}.error.message.${error.error}`, `${namespace}.error.message.default`, `error.message.${error.error}`, 'error.message.default', 'error.message'],
     } = options;
-    return (error, result) => {
+    return (e, result) => {
+      // javascript error has odd non-enumerable properties: name, message
+      let error = null;
+      if (e) {
+        const { message, name, ...eprops } = e;
+        error = { message, name, ...eprops };
+      }
       const additionalProps = props({ error, result });
       if (error) {
         this.error({
