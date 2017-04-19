@@ -160,7 +160,16 @@ var _class = function () {
         return [namespace + '.error.message.' + error.error, namespace + '.error.message.default', 'error.message.' + error.error, 'error.message.default', 'error.message'];
       } : _options$messageError;
 
-      return function (error, result) {
+      return function (e, result) {
+        // javascript error has odd non-enumerable properties: name, message
+        var error = null;
+        if (e) {
+          var message = e.message,
+              name = e.name,
+              eprops = _objectWithoutProperties(e, ['message', 'name']);
+
+          error = _extends({ message: message, name: name }, eprops);
+        }
         var additionalProps = props({ error: error, result: result });
         if (error) {
           _this.error(_extends({
