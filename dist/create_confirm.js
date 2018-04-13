@@ -5,9 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.depsMapper = exports.composer = undefined;
 
-var _mantraCore = require('mantra-core');
+var _pure2 = require('recompose/pure');
 
-var _recompose = require('recompose');
+var _pure3 = _interopRequireDefault(_pure2);
+
+var _mantraCore = require('@storybook/mantra-core');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var composer = exports.composer = function composer(_ref, onData) {
   var context = _ref.context;
@@ -28,6 +32,6 @@ var depsMapper = exports.depsMapper = function depsMapper(_context2) {
 };
 
 exports.default = function (C) {
-  return (0, _mantraCore.composeAll)((0, _mantraCore.composeWithTracker)(composer), (0, _mantraCore.useDeps)(depsMapper), _recompose.pure)(C);
+  return (0, _mantraCore.composeAll)((0, _mantraCore.composeWithTracker)(composer), (0, _mantraCore.useDeps)(depsMapper), _pure3.default)(C);
 };
 //# sourceMappingURL=create_confirm.js.map

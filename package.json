@@ -17,7 +17,7 @@
   "peerDependencies": {
     "babel-runtime": "*.*.*",
     "lodash": "^4.0.0",
-    "mantra-core": "^1.7.0"
+    "@storybook/mantra-core": "^1.7.2"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",

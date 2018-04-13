@@ -1,11 +1,15 @@
 import React from 'react';
-import { useDeps, composeAll, composeWithTracker } from 'mantra-core';
+import {
+  useDeps,
+  composeAll,
+  composeWithTracker,
+} from '@storybook/mantra-core';
 import { NotificationStack as ReactNotificationStack } from 'react-notification';
 import { pure } from 'recompose';
 
 // some aliassing for ReactNotificationStack
-const transformAlerts = (alerts, defaultStyles, stylesError) => alerts.map(
-  ({ onActionClick, actionLabel, type, ...alert }) => ({
+const transformAlerts = (alerts, defaultStyles, stylesError) =>
+  alerts.map(({ onActionClick, actionLabel, type, ...alert }) => ({
     ...{
       ...defaultStyles,
       ...(type === 'error' && stylesError),
@@ -13,19 +17,13 @@ const transformAlerts = (alerts, defaultStyles, stylesError) => alerts.map(
     ...alert,
     action: actionLabel,
     onClick: onActionClick,
-  }),
+  }));
+const AlertStack = ({ dismissAlert, alerts, styles, stylesError }) => (
+  <ReactNotificationStack
+    notifications={transformAlerts(alerts, styles, stylesError)}
+    onDismiss={dismissAlert}
+  />
 );
-const AlertStack = ({
-    dismissAlert,
-    alerts,
-    styles,
-    stylesError,
-  }) => (
-    <ReactNotificationStack
-      notifications={transformAlerts(alerts, styles, stylesError)}
-      onDismiss={dismissAlert}
-    />
-  );
 
 export const composer = ({ context }, onData) => {
   const { Alerts, i18n } = context();
@@ -43,14 +41,19 @@ export const composer = ({ context }, onData) => {
     }
     return i18n.t(keyOrKeyArray, translateProps, fallbackOptions);
   };
-  const translateAlert = ({ disableI18n, message, actionLabel, title, ...alert }) => ({
+  const translateAlert = ({
+    disableI18n,
+    message,
+    actionLabel,
+    title,
+    ...alert
+  }) => ({
     ...alert,
     message: translate(message, alert, disableI18n),
     title: translate(title, alert, disableI18n),
     actionLabel: translate(actionLabel, alert, disableI18n),
-  })
+  });
   // translate alerts
-  ;
   onData(null, { alerts: alerts.map(translateAlert) });
 };
 

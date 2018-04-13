@@ -5,17 +5,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.depsMapper = exports.composer = undefined;
 
+var _pure2 = require('recompose/pure');
+
+var _pure3 = _interopRequireDefault(_pure2);
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _mantraCore = require('mantra-core');
+var _mantraCore = require('@storybook/mantra-core');
 
 var _reactNotification = require('react-notification');
-
-var _recompose = require('recompose');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -59,7 +61,8 @@ var composer = function composer(_ref3, onData) {
   var fallbackOptions = {
     useFallbackForMissing: true,
     showKeyForMissing: true,
-    nullKeyValue: null };
+    nullKeyValue: null // when a key is not given, dont show anything
+  };
   var translate = function translate(keyOrKeyArray, translateProps, disableI18n) {
     if (disableI18n) {
       return keyOrKeyArray;
@@ -78,9 +81,8 @@ var composer = function composer(_ref3, onData) {
       title: translate(title, alert, disableI18n),
       actionLabel: translate(actionLabel, alert, disableI18n)
     });
-  }
+  };
   // translate alerts
-  ;
   onData(null, { alerts: alerts.map(translateAlert) });
 };
 
@@ -94,5 +96,5 @@ var depsMapper = exports.depsMapper = function depsMapper(_context2, actions) {
   };
 };
 
-exports.default = (0, _mantraCore.composeAll)((0, _mantraCore.composeWithTracker)(composer), (0, _mantraCore.useDeps)(depsMapper), _recompose.pure)(AlertStack);
+exports.default = (0, _mantraCore.composeAll)((0, _mantraCore.composeWithTracker)(composer), (0, _mantraCore.useDeps)(depsMapper), _pure3.default)(AlertStack);
 //# sourceMappingURL=alerts_stack.js.map
