@@ -2,10 +2,12 @@ import React from 'react';
 import {
   useDeps,
   composeAll,
-  composeWithTracker,
 } from '@storybook/mantra-core';
+
 import { NotificationStack as ReactNotificationStack } from 'react-notification';
 import { pure } from 'recompose';
+import composeWithTracker from './utils/compose_with_tracker';
+
 
 // some aliassing for ReactNotificationStack
 const transformAlerts = (alerts, defaultStyles, stylesError) =>

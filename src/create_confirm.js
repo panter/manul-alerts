@@ -1,9 +1,9 @@
 import {
   useDeps,
   composeAll,
-  composeWithTracker,
 } from '@storybook/mantra-core';
 import { pure } from 'recompose';
+import composeWithTracker from './utils/compose_with_tracker';
 
 export const composer = ({ context }, onData) => {
   const { Alerts } = context();

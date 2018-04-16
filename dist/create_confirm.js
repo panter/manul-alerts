@@ -11,6 +11,10 @@ var _pure3 = _interopRequireDefault(_pure2);
 
 var _mantraCore = require('@storybook/mantra-core');
 
+var _compose_with_tracker = require('./utils/compose_with_tracker');
+
+var _compose_with_tracker2 = _interopRequireDefault(_compose_with_tracker);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var composer = exports.composer = function composer(_ref, onData) {
@@ -32,6 +36,6 @@ var depsMapper = exports.depsMapper = function depsMapper(_context2) {
 };
 
 exports.default = function (C) {
-  return (0, _mantraCore.composeAll)((0, _mantraCore.composeWithTracker)(composer), (0, _mantraCore.useDeps)(depsMapper), _pure3.default)(C);
+  return (0, _mantraCore.composeAll)((0, _compose_with_tracker2.default)(composer), (0, _mantraCore.useDeps)(depsMapper), _pure3.default)(C);
 };
 //# sourceMappingURL=create_confirm.js.map

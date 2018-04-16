@@ -39,7 +39,8 @@
   },
   "dependencies": {
     "react-notification": "^6.6.0",
-    "recompose": "^0.21.2"
+    "recompose": "^0.21.2",
+    "manul-react-komposer": "^0.0.8"
   },
   "scripts": {
     "prepublish": "npm run compile",

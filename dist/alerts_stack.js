@@ -19,6 +19,10 @@ var _mantraCore = require('@storybook/mantra-core');
 
 var _reactNotification = require('react-notification');
 
+var _compose_with_tracker = require('./utils/compose_with_tracker');
+
+var _compose_with_tracker2 = _interopRequireDefault(_compose_with_tracker);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -96,5 +100,5 @@ var depsMapper = exports.depsMapper = function depsMapper(_context2, actions) {
   };
 };
 
-exports.default = (0, _mantraCore.composeAll)((0, _mantraCore.composeWithTracker)(composer), (0, _mantraCore.useDeps)(depsMapper), _pure3.default)(AlertStack);
+exports.default = (0, _mantraCore.composeAll)((0, _compose_with_tracker2.default)(composer), (0, _mantraCore.useDeps)(depsMapper), _pure3.default)(AlertStack);
 //# sourceMappingURL=alerts_stack.js.map
