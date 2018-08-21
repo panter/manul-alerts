@@ -1,5 +1,7 @@
-import { useDeps, composeAll, composeWithTracker } from 'mantra-core';
+import { useDeps, composeAll } from '@storybook/mantra-core';
+
 import { pure } from 'recompose';
+import composeWithTracker from './utils/composeWithTracker';
 
 export const composer = ({ context }, onData) => {
   const { Alerts } = context();
@@ -11,8 +13,4 @@ export const depsMapper = context => ({
   context: () => context,
 });
 
-export default C => composeAll(
-  composeWithTracker(composer),
-  useDeps(depsMapper),
-  pure,
-)(C);
+export default C => composeAll(composeWithTracker(composer), useDeps(depsMapper), pure)(C);

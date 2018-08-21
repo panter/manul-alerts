@@ -1,11 +1,13 @@
 import React from 'react';
-import { useDeps, composeAll, composeWithTracker } from 'mantra-core';
+import { useDeps, composeAll } from '@storybook/mantra-core';
+
 import { NotificationStack as ReactNotificationStack } from 'react-notification';
 import { pure } from 'recompose';
+import composeWithTracker from './utils/composeWithTracker';
 
 // some aliassing for ReactNotificationStack
-const transformAlerts = (alerts, defaultStyles, stylesError) => alerts.map(
-  ({ onActionClick, actionLabel, type, ...alert }) => ({
+const transformAlerts = (alerts, defaultStyles, stylesError) =>
+  alerts.map(({ onActionClick, actionLabel, type, ...alert }) => ({
     ...{
       ...defaultStyles,
       ...(type === 'error' && stylesError),
@@ -13,19 +15,13 @@ const transformAlerts = (alerts, defaultStyles, stylesError) => alerts.map(
     ...alert,
     action: actionLabel,
     onClick: onActionClick,
-  }),
+  }));
+const AlertStack = ({ dismissAlert, alerts, styles, stylesError }) => (
+  <ReactNotificationStack
+    notifications={transformAlerts(alerts, styles, stylesError)}
+    onDismiss={dismissAlert}
+  />
 );
-const AlertStack = ({
-    dismissAlert,
-    alerts,
-    styles,
-    stylesError,
-  }) => (
-    <ReactNotificationStack
-      notifications={transformAlerts(alerts, styles, stylesError)}
-      onDismiss={dismissAlert}
-    />
-  );
 
 export const composer = ({ context }, onData) => {
   const { Alerts, i18n } = context();
@@ -48,9 +44,8 @@ export const composer = ({ context }, onData) => {
     message: translate(message, alert, disableI18n),
     title: translate(title, alert, disableI18n),
     actionLabel: translate(actionLabel, alert, disableI18n),
-  })
+  });
   // translate alerts
-  ;
   onData(null, { alerts: alerts.map(translateAlert) });
 };
 
@@ -59,8 +54,4 @@ export const depsMapper = (context, actions) => ({
   dismissAlert: actions.alerts.dismiss,
 });
 
-export default composeAll(
-  composeWithTracker(composer),
-  useDeps(depsMapper),
-  pure,
-)(AlertStack);
+export default composeAll(composeWithTracker(composer), useDeps(depsMapper), pure)(AlertStack);

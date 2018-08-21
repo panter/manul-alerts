@@ -1,11 +1,11 @@
 {
   "name": "@panter/manul-alerts",
   "description": "",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "author": {
     "name": "Marco Wettstein",
     "email": "maw@panter.ch",
-    "url": "www.panter.ch"
+    "url": "https://www.panter.ch"
   },
   "license": "MIT",
   "repository": {
@@ -13,13 +13,15 @@
     "url": "git://github.com/panter/manul-alerts.git"
   },
   "bugs": "https://github.com/panter/manul-alerts/issues",
-
   "peerDependencies": {
-    "babel-runtime": "*.*.*",
-    "lodash": "^4.0.0",
-    "mantra-core": "^1.7.0"
+    "babel-runtime": "*",
+    "lodash": "*",
+    "@storybook/mantra-core": "*",
+    "@storybook/react-komposer": "*"
   },
   "devDependencies": {
+    "@storybook/mantra-core": "^1.7.2",
+    "@storybook/react-komposer": "^2.0.3",
     "babel-cli": "^6.24.0",
     "babel-eslint": "^6.1.2",
     "babel-plugin-lodash": "^3.2.11",
@@ -35,16 +37,18 @@
     "eslint-plugin-meteor": "^4.0.1",
     "eslint-plugin-react": "^6.8.0",
     "glob": "^5.0.15",
-    "tape": "^4.2.2"
+    "tape": "^4.2.2",
+    "watch": "^1.0.2"
   },
   "dependencies": {
-    "react-notification": "^6.6.0",
-    "recompose": "^0.21.2"
+    "react-notification": "^6.8.2",
+    "recompose": ">=0.21.2"
   },
   "scripts": {
     "prepublish": "npm run compile",
     "test": "babel-node --stage 1 test/harness.js test/**/*.js",
     "compile": "npm run lint && babel src -s -d dist",
+    "compile:watch": "watch 'npm run compile;yalc push' src",
     "lint": "eslint src/**.js"
   },
   "main": "./dist/index.js"
